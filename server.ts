@@ -17,7 +17,7 @@ app.use('/files',express.static(__dirname+'/files'));
 app.get('/', function(req,res){
     res.send("hallo");
 });
-app.post('/api/file', upload.single(''), function (req,res,next){
+app.post('/api/file', upload.single('file'), function (req,res,next){
     console.log(req.file);
     if(isImage(req.file.filename)){
         gm(req.file.filename).write(__dirname+'/files/'+req.file.originalname,function (err) {

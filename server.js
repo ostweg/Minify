@@ -1,5 +1,6 @@
 import * as express from "express";
 const gm = require('gm').subClass({imageMagick:false});
+const fs = require('fs');
 const app = express();
 const isImage = require('is-image');
 const multer = require('multer');
@@ -18,20 +19,24 @@ app.use('/files',express.static(__dirname+'/original'));
 app.get('/', function(req,res){
     res.send("hallo");
 });
-app.post('/api/file', upload.single(''), function (req,res,next){
+app.post('/api/file', upload.single('file'), function (req,res,next){
     console.log(req.file);
+    if(!fs.existsSync(__dirname + '/files')){
+        fs.mkdirSync(__dirname + '/files');
+    }
     if(isImage(req.file.filename)){
 
         gm('original/'+req.file.filename).resize(720,null).write(__dirname+'/files'+'/small_'+req.file.originalname,function (err) {
-            if(err) console.log(req.file);
+            if(err) console.log(err);
         });
         gm('original/'+req.file.filename).resize(1280,null).write(__dirname+'/files'+'/medium_'+req.file.originalname,function (err) {
-            if(err) console.log(req.file);
+            if(err) console.log(err);
         });
         gm('original/'+req.file.filename).resize(1920,null).write(__dirname+'/files'+'/big_'+req.file.originalname,function (err) {
-            if(err) console.log(req.file);
+            if(err) console.log(err);
         });
         res.status(200).send('ok');
+
     }
     else {
        res.status(500).send('Server error');

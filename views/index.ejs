@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <% include header.ejs %>
+</head>
+<body>
+<div class="container1">
+    <div class="up">
+        <h1>Dateien hochladen</h1>
+
+            <form action="/api/file" method="post" enctype="multipart/form-data">
+                <label>Wählen Sie ein Bild aus.
+                </label><br>
+                <input name="file" type="file" accept="image/*" ><br>
+                <button>Senden</button>
+            </form>
+
+    </div>
+    <div class="up1">
+        <h1>Mehrere Dateien hochladen</h1>
+            <form  action="/api/files" method="post" enctype="multipart/form-data" >
+                <label>Wählen Sie mehrere Bilder aus
+                </label><br>
+                <input name="files" type="file" accept="image/*" multiple><br>
+                <button>Senden</button>
+            </form>
+    </div>
+</div>
+<div class="container2">
+    <div class="title">
+        <h1>Alle Dateien</h1>
+        <p>Converted images</p>
+        <% for (let img of data) { %>
+            <img src="./files/<%= img%>" style="width:50px">
+        <% } %>
+        <p>Original images</p>
+        <% for (let img of original) { %>
+            <img src="./files/<%= img%>" style="width:50px">
+        <% } %>
+    </div>
+</div>
+<style>
+    @media screen and(max-width:500px){
+        .container1 {
+            display:flex;
+        }
+    }
+    .up {
+        background-color:grey;
+    }
+    .up1 {
+        background-color:lightgrey;
+    }
+
+
+</style>
+</body>
+</html>

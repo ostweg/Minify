@@ -3,6 +3,7 @@
   "scripts": "gulp-optimize",
   "version": "1.0.0",
   "dependencies": {
+    "ejs": "^2.6.1",
     "@types/node": "^11.11.7",
     "express": "^4.16.4",
     "express-processimage": "^8.1.0",

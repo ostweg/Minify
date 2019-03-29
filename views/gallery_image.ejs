@@ -1,0 +1,16 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <% include header.ejs %>
+</head>
+<div class="title">
+    <h1>Alle Dateien</h1>
+    <p>Converted images</p>
+    <% for (let img of converted) { %>
+        <img src="../files/<%= img%>" style="width:100px">
+    <% } %>
+    <p>Original images</p>
+    <% for (let img of original) { %>
+        <img src="../files/<%= img%>" style="width:100px">
+    <% } %>
+</div>

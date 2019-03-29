@@ -21,8 +21,8 @@ app.use('/files',express.static(__dirname+'/original'));
 
 
 app.get('/gallery/image', function(req,res){
-    res.render('images', {
-        converted: fs.readdirSync(__dirname + '/files/'),
+    res.render('gallery_image', {
+        converted: fs.readdirSync(__dirname + '/files/').filter(img => img !== '.gitkeep'),
         original: fs.readdirSync(__dirname + '/original/')
     });
 });
@@ -75,7 +75,7 @@ app.post('/api/files', upload.array('files', 99), function (req, res, next) {
 });
 app.get('/*', function(req,res){
     res.render('index',{
-        data: fs.readdirSync(__dirname + '/files/'),
+        data: fs.readdirSync(__dirname + '/files/').filter(img => img !== '.gitkeep'),
         original: fs.readdirSync(__dirname + '/original/')
     });
 });

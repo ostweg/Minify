@@ -1,0 +1,24 @@
+<html>
+<head>
+    <% include header.ejs %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" style="margin-top:90px">
+
+    <div class="row" >
+        <div class="mx-auto d-block">
+            <div class="col-12">
+                <form method="post" action="/api/videos" enctype="multipart/form-data">
+                    <input class="btn-block" type="text" name="title" placeholder="Enter Title"><br>
+                    <input type="file" name="videos" accept="video/*" multiple><br>
+                    <button class="btn-block btn-primary " style="border:none;margin-top:25px"> Senden</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

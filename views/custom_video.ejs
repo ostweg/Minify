@@ -1,0 +1,97 @@
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <% include header.ejs%>
+    <style>
+        #video-container {
+            position:relative;
+            text-align:center;
+        }
+        #video-controls {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: white;
+        }
+        #video-container:hover #video-controls {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+<%if(video == "not found"){ %>
+    <p>Not found</p>
+<% }else{ %>
+<div id="video-container">
+<video width="auto" height="50%" id="video">
+    <source src="/files/<%= video %>" type="video/mp4">
+</video>
+<div id="video-controls" >
+    <button type="button" id="play-pause" onclick="playButton1()"> <i class="fas fa-play"></i></button>
+    <button type="button" id="mute" onclick="muteButton1()"><i class="fas fa-volume-up"></i></button>
+    <button type="button" id="full-screen" onclick="fullScreenButton1()"><i class="fas fa-arrows-alt"></i>  </button>
+    <button type="button" id="fast" onclick="PlayVideo()"><i class="fas fa-tachometer-alt"></i>1.5x</button>
+    <button type="button" id="faster" onclick="PlayVideoFast()"><i class="fas fa-tachometer-alt"></i>2x</button>
+</div>
+</div>
+<% } %>
+<script>
+    var video = document.getElementById("video");
+
+    // Buttons
+    var playButton = document.getElementById("play-pause");
+    var muteButton = document.getElementById("mute");
+    var fullScreenButton = document.getElementById("full-screen");
+
+    function playButton1()
+    {
+        if (video.paused == true) {
+            video.play();
+            playButton.innerHTML = "<i class=\"fas fa-play\"></i>";
+        } else {
+            video.pause();
+            playButton.innerHTML = "<i class=\"fas fa-pause\"></i>";
+        }
+    };
+
+    function muteButton1()
+    {
+        if (video.muted == false) {
+            video.muted = true;
+            muteButton.innerHTML = "<i class=\"fas fa-volume-up\"></i>";
+        } else {
+            video.muted = false;
+            muteButton.innerHTML = "<i class=\"fas fa-volume-mute\"></i>";
+        }
+    };
+    function fullScreenButton1()
+    {
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+
+        } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        }
+    };
+    function PlayVideo(){
+        video.defaultPlaybackRate = 1.5;
+    }
+    function PlayVideoFast(){
+        video.defaultPlaybackRate = 2;
+    }
+</script>
+<style>
+    button {
+        background-color:transparent;
+        border:none;
+        outline:none;
+    }
+</style>
+</body>

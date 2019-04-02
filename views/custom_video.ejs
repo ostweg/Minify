@@ -12,14 +12,15 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 100%;
             width: 100%;
+            height:25px;
             opacity: 0;
             transition: .5s ease;
-            background-color: white;
+            background-color:white;
+            box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
         #video-container:hover #video-controls {
-            opacity: 0.9;
+            opacity: 1;
         }
     </style>
 </head>
@@ -28,7 +29,7 @@
     <p>Not found</p>
 <% }else{ %>
 <div id="video-container">
-<video width="auto" height="50%" id="video">
+<video width="auto" height="50%" id="video" autoplay>
     <source src="/files/<%= video %>" type="video/mp4">
 </video>
 <div id="video-controls" >
@@ -57,6 +58,7 @@
             video.pause();
             playButton.innerHTML = "<i class=\"fas fa-pause\"></i>";
         }
+
     };
 
     function muteButton1()

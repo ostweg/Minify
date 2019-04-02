@@ -41,29 +41,12 @@ app.get('/gallery/image', function (req, res) {
 });
 app.get('/play_video', function (req, res) {
     var video2Play = req.query.videoName;
-    if (video2Play == " ") {
-        video2Play == "default.mp4";
-    }
-    console.log(SearchForVideo(video2Play));
     res.render('custom_video', {
         //video:SearchForVideo(video2Play)
         video: fs.readdirSync(__dirname + '/files/videos/').filter(function (x) { return x == video2Play; })
     });
 });
-function SearchForVideo(VideoTitle) {
-    var videosFromDir = fs.readdirSync(__dirname + '/files/videos/');
-    for (var m = 0; m < videosFromDir.length; m++) {
-        if (videosFromDir[m] == VideoTitle) {
-            return videosFromDir[m];
-        }
-        else {
-            return "not found";
-        }
-    }
-}
 app.post('/api/videos', upload1.array('videos', 99), function (req, res) {
-    res.status(200).send("Ok");
-    //mergedvideo.setFfprobePath("C:\\Users\\vmadmin\\Desktop\\ffmpeg-20190330-52d8f35-win64-static\\bin\\ffprobe.exe");
     var videos = req.files;
     var title = req.body.title;
     var ending = '.mp4';
@@ -77,6 +60,9 @@ app.post('/api/videos', upload1.array('videos', 99), function (req, res) {
     })
         .on('end', function () {
         console.log("finished");
+        res.render('custom_video', {
+            video: fs.readdirSync(__dirname + '/files/videos/').filter(function (x) { return x == title + ending; })
+        });
     });
 });
 app.post('/api/file', upload.single('file'), function (req, res, next) {

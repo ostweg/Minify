@@ -1,0 +1,29 @@
+<head>
+    <% include header.ejs%>
+</head>
+<body>
+<h1>Upload Audio</h1>
+<div class="container" style="margin-top:90px">
+
+    <div class="row" >
+        <div class="mx-auto d-block">
+            <div class="col-12">
+                <form method="post" action="/api/audio" enctype="multipart/form-data">
+                    <label>Vtt-File</label>
+                    <input class="btn-block" type="file" name="audio" ><br>
+                    <label>Audio</label><br>
+                    <input type="file" accept="audio/*" name="audio"><br>
+                    <button class="btn-block btn-info" style="border:none;margin-top:25px"> Senden</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    h1 {
+        text-align:center;
+        margin-top:50px;
+    }
+</style>
+</html>

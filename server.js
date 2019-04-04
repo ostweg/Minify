@@ -20,9 +20,16 @@ var storage1 = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
+var storage2 = multer.diskStorage({
+    destination: __dirname + '/original/audio/',
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
 var videoName = [];
 var upload = multer({ storage: storage });
 var upload1 = multer({ storage: storage1 });
+var upload2 = multer({ storage: storage2 });
 app.set('view engine', 'ejs');
 app.listen(process.env.PORT || 80, function () {
     console.log("Server listens on port" + 80);
@@ -30,6 +37,7 @@ app.listen(process.env.PORT || 80, function () {
 app.use('/files', express.static(__dirname + '/files'));
 app.use('/files', express.static(__dirname + '/original'));
 app.use('/files', express.static(__dirname + '/files/videos'));
+app.use('/files', express.static(__dirname + '/original/audio'));
 app.get('/video_manager', function (req, res) {
     res.render('video_converter');
 });
@@ -44,6 +52,30 @@ app.get('/play_video', function (req, res) {
     res.render('custom_video', {
         //video:SearchForVideo(video2Play)
         video: fs.readdirSync(__dirname + '/files/videos/').filter(function (x) { return x == video2Play; })
+    });
+});
+app.get('/audio_manager', function (req, res) {
+    res.render('audio_manager');
+});
+app.get('/audio-player', function (req, res) {
+    var audio2Play = req.query.audioName;
+    var vtt2Play = req.query.audioName.slice(0, -4) + '.vtt';
+    console.log(vtt2Play);
+    res.render('audio_player', {
+        audio: fs.readdirSync(__dirname + '/original/audio/').filter(function (audio) { return audio == audio2Play; }),
+        subtitle: fs.readdirSync(__dirname + '/original/audio/').filter(function (vtt) { return vtt == vtt2Play; })
+    });
+});
+app.post('/api/audio', upload2.array('audio'), function (req, res) {
+    var NameOfAudio = req.files[1].filename.slice(0, -4);
+    fs.rename('./original/audio/' + req.files[0].filename, './original/audio/' + NameOfAudio + '.vtt', function (err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.json({ audio: req.files[1].path, vtt: req.files[0].path });
+        }
+        ;
     });
 });
 app.post('/api/videos', upload1.array('videos', 99), function (req, res) {
